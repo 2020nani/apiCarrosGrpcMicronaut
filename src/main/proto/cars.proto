@@ -9,8 +9,14 @@ package br.com.hernani;
 
 service CarsService {
   rpc cadastraCarros (CarsRequest) returns (CarsResponse) {}
+  rpc excluiCarros (CarsId) returns (ExcluiResponse){}
 }
-
+message CarsId {
+  int64 id = 1;
+}
+message ExcluiResponse{
+  string message = 1;
+}
 message CarsRequest {
   string modelo = 1;
   string placa = 2;

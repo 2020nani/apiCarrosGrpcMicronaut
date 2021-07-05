@@ -1,5 +1,6 @@
 package br.com.hernani.cadastracarros
 
+import br.com.hernani.CarsId
 import br.com.hernani.CarsRequest
 import br.com.hernani.CarsServiceGrpc
 import org.junit.jupiter.api.Assertions.*
@@ -96,6 +97,28 @@ class NovoCarroEndpointTest (
             assertEquals("Formato da placa tem que ser letras e numeros,ex: AAA-9999", this.status.description)
         }
 
+    }
+
+    @Test
+    fun `exclui-carro-por-id` () {
+
+        repository.deleteAll()
+
+        val response = grpcClient.cadastraCarros(
+            CarsRequest.newBuilder()
+                .setModelo("Gol")
+                .setPlaca("HPX-1234")
+                .build()
+        )
+
+        val excluiCarro = grpcClient.excluiCarros(CarsId.newBuilder()
+            .setId(response.id)
+            .build())
+
+        with(excluiCarro){
+
+            assertFalse(repository.existsById(response.id))
+        }
     }
 
 

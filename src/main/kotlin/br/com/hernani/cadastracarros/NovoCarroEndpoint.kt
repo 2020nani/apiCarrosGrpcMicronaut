@@ -1,8 +1,6 @@
 package br.com.hernani.cadastracarros
 
-import br.com.hernani.CarsRequest
-import br.com.hernani.CarsResponse
-import br.com.hernani.CarsServiceGrpc
+import br.com.hernani.*
 import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import org.slf4j.LoggerFactory
@@ -57,6 +55,16 @@ class NovoCarroEndpoint(
             )
         }
 
+    }
+
+    override fun excluiCarros(request: CarsId?, responseObserver: StreamObserver<ExcluiResponse>?) {
+
+           carrosRepository.deleteById(request?.id)
+
+        responseObserver?.onNext(ExcluiResponse.newBuilder()
+            .setMessage("Carro com o id: ${request?.id} deletado com sucesso")
+            .build())
+        responseObserver?.onCompleted()
     }
 }
 
