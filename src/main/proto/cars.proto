@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.hernani";
+option java_outer_classname = "Cars";
+option objc_class_prefix = "HLW";
+
+package br.com.hernani;
+
+service CarsService {
+  rpc cadastraCarros (CarsRequest) returns (CarsResponse) {}
+}
+
+message CarsRequest {
+  string modelo = 1;
+  string placa = 2;
+}
+
+message CarsResponse {
+  int64 id = 1;
+}
